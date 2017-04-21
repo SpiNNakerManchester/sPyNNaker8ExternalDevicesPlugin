@@ -1,5 +1,6 @@
 from spynnaker8.utilities.data_holder import DataHolder
-from spynnaker_external_devices_plugin.pyNN import \
+from spynnaker_external_devices_plugin.pyNN.external_devices_models.push_bot\
+    .push_bot_spinnaker_link.push_bot_spinnaker_link_motor_device import \
     PushBotSpiNNakerLinkMotorDevice
 
 

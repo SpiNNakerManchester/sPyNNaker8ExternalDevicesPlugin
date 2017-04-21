@@ -1,7 +1,9 @@
 from spynnaker.pyNN.models.neuron.abstract_population_vertex import \
     AbstractPopulationVertex
 from spynnaker8.utilities.data_holder import DataHolder
-from spynnaker_external_devices_plugin.pyNN import PushBotLifEthernet
+from spynnaker_external_devices_plugin.pyNN.external_devices_models.push_bot\
+    .push_bot_control_modules.push_bot_lif_ethernet import \
+    PushBotLifEthernet
 from spynnaker_external_devices_plugin.pyNN.external_devices_models\
     .external_device_lif_control import ExternalDeviceLifControl
 

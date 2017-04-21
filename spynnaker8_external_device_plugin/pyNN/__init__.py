@@ -104,6 +104,7 @@ from spynnaker_external_devices_plugin.pyNN.external_devices_models.push_bot. \
 # push bot retina viewer
 from spynnaker_external_devices_plugin.pyNN.external_devices_models.push_bot. \
     push_bot_parameters.push_bot_retina_viewer import PushBotRetinaViewer
+
 from spynnaker_external_devices_plugin.pyNN.external_devices_models.push_bot. \
     push_bot_parameters.push_bot_speaker import PushBotSpeaker
 
