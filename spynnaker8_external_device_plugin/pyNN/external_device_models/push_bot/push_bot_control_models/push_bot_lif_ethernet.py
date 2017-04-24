@@ -49,7 +49,7 @@ class PushBotLifEthernetDataHolder(DataHolder):
              'constraints': constraints,
              'tau_m': tau_m, 'cm': cm, 'v_rest': v_rest, 'v_reset': v_reset,
              'tau_syn_E': tau_syn_E, 'tau_syn_I': tau_syn_I,
-             'tau_refac': tau_refrac, 'i_offset': i_offset, 'v_init': v_init,
+             'tau_refrac': tau_refrac, 'i_offset': i_offset, 'v_init': v_init,
              'pushbot_ip_address': pushbot_ip_address,
              'pushbot_port': pushbot_port})
 

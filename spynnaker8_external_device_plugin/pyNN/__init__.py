@@ -22,6 +22,8 @@ from spynnaker.pyNN.spinnaker_common import SpiNNakerCommon
 from spynnaker.pyNN.utilities import constants
 from spynnaker.pyNN.utilities import globals_variables
 
+import spynnaker8
+
 # components
 from spynnaker8_external_device_plugin.pyNN.external_device_models \
     .arbitrary_fpga_device import ArbitraryFPGADeviceDataHolder as \
@@ -109,33 +111,28 @@ from spynnaker_external_devices_plugin.pyNN.external_devices_models.push_bot. \
     push_bot_parameters.push_bot_speaker import PushBotSpeaker
 
 # push bot spinnaker link devices
-from spynnaker8_external_device_plugin.pyNN.external_device_models.push_bot\
+from spynnaker_external_devices_plugin.pyNN.external_devices_models.push_bot\
     .push_bot_spinnaker_link.push_bot_spinnaker_link_laser_device import \
-    PushBotSpiNNakerLinkLaserDeviceDataHolder as \
     PushBotSpiNNakerLinkLaserDevice
 
-from spynnaker8_external_device_plugin.pyNN.external_device_models.push_bot\
+from spynnaker_external_devices_plugin.pyNN.external_devices_models.push_bot\
     .push_bot_spinnaker_link.push_bot_spinnaker_link_led_device import \
-    PushBotSpiNNakerLinkLEDDeviceDataHolder as PushBotSpiNNakerLinkLEDDevice
-
-from spynnaker8_external_device_plugin.pyNN.external_device_models.push_bot\
-    .push_bot_spinnaker_link.push_bot_spinnaker_link_led_device \
-    import PushBotSpiNNakerLinkLEDDeviceDataHolder as \
     PushBotSpiNNakerLinkLEDDevice
 
-from spynnaker8_external_device_plugin.pyNN.external_device_models.push_bot\
-    .push_bot_spinnaker_link.push_bot_spinnaker_link_motor_device \
-    import PushBotSpiNNakerLinkMotorDeviceDataHolder as \
+from spynnaker_external_devices_plugin.pyNN.external_devices_models.push_bot\
+    .push_bot_spinnaker_link.push_bot_spinnaker_link_led_device import \
+    PushBotSpiNNakerLinkLEDDevice
+
+from spynnaker_external_devices_plugin.pyNN.external_devices_models.push_bot\
+    .push_bot_spinnaker_link.push_bot_spinnaker_link_motor_device import \
     PushBotSpiNNakerLinkMotorDevice
 
-from spynnaker8_external_device_plugin.pyNN.external_device_models.push_bot\
-    .push_bot_spinnaker_link.push_bot_spinnaker_link_retina_device \
-    import PushBotSpiNNakerLinkRetinaDeviceDataHolder as \
+from spynnaker_external_devices_plugin.pyNN.external_devices_models.push_bot\
+    .push_bot_spinnaker_link.push_bot_spinnaker_link_retina_device import \
     PushBotSpiNNakerLinkRetinaDevice
 
-from spynnaker8_external_device_plugin.pyNN.external_device_models.push_bot\
-    .push_bot_spinnaker_link.push_bot_spinnaker_link_speaker_device \
-    import PushBotSpiNNakerLinkSpeakerDeviceDataHolder as \
+from spynnaker_external_devices_plugin.pyNN.external_devices_models.push_bot\
+    .push_bot_spinnaker_link.push_bot_spinnaker_link_speaker_device import \
     PushBotSpiNNakerLinkSpeakerDevice
 
 # PushBot protocols
@@ -310,16 +307,14 @@ def activate_live_output_to(population, device):
         population._get_vertex, device._get_vertex,
         constants.SPIKE_PARTITION_ID)
 
-
-def EthernetControl(
-        params, local_host=None, local_port=None,
+def EthernetControlPopulation(
+        n_neurons, model, label=None, local_host=None, local_port=None,
         database_notify_port_num=None, database_ack_port_num=None):
     """ Create a PyNN population that can be included in a network to\
         control an external device which is connected to the host
-
     :param n_neurons: The number of neurons in the control population
     :param model: Class of a model that implements AbstractEthernetController
-    :param params: The parameters of the model
+    :param label: An optional label for the population
     :param local_host:\
             The optional local host IP address to listen on for commands
     :param lost_port: The optional local port to listen on for commands
@@ -334,10 +329,11 @@ def EthernetControl(
             Note that the Population can also be used as the source of a\
             Projection, but it might not send spikes.
     """
-    if not issubclass(params['model'], AbstractEthernetController):
+    if not issubclass(model.build_model(), AbstractEthernetController):
         raise Exception(
             "Model must be a subclass of AbstractEthernetController")
-    vertex = params['model']
+    population = spynnaker8.Population(n_neurons, model, label=label)
+    vertex = population._get_vertex
     translator = vertex.get_message_translator()
     ethernet_control_connection = EthernetControlConnection(
         translator, local_host, local_port)
@@ -361,17 +357,15 @@ def EthernetControl(
     for partition_id in vertex.get_outgoing_partition_ids():
         spynnaker_external_devices.add_edge(
             vertex, live_packet_gather, partition_id)
-    return vertex
+    return population
 
 
 def EthernetSensorPopulation(
-        model, params, local_host=None,
+        device, local_host=None,
         database_notify_port_num=None, database_ack_port_num=None):
     """ Create a pyNN population which can be included in a network to\
         receive spikes from a device connected to the host
-
-    :param model: Class of a model that implements AbstractEthernetController
-    :param params: The parameters of the model
+    :param device: Class of a model that implements AbstractEthernetController
     :param local_host:\
             The optional local host IP address to listen on for database\
             notification
@@ -386,16 +380,14 @@ def EthernetSensorPopulation(
             Note that the Population cannot be used as the target of a\
             Projection.
     """
-    if not issubclass(model, AbstractEthernetSensor):
+    if not issubclass(device.build_model(), AbstractEthernetSensor):
         raise Exception("Model must be a subclass of AbstractEthernetSensor")
-    device = model(**params)
     injector_params = dict(device.get_injector_parameters())
     injector_params['notify'] = False
 
-    spike_injector_params = dict(injector_params)
-    spike_injector_params['label'] = device.get_injector_label()
-
-    vertex = SpikeInjector(**injector_params)
+    population = spynnaker8.Population(
+        device.get_n_neurons(), SpikeInjector(**injector_params),
+        label=device.get_injector_label())
     if isinstance(device, AbstractSendMeMulticastCommandsVertex):
         ethernet_command_connection = EthernetCommandConnection(
             device.get_translator(), [device], local_host,
@@ -403,13 +395,12 @@ def EthernetSensorPopulation(
         add_database_socket_address(
             ethernet_command_connection.local_ip_address,
             ethernet_command_connection.local_port, database_ack_port_num)
-
     database_connection = device.get_database_connection()
     if database_connection is not None:
         add_database_socket_address(
             database_connection.local_ip_address,
             database_connection.local_port, database_ack_port_num)
-    return vertex
+    return population
 
 
 def SpikeInjector(

@@ -40,11 +40,11 @@ class PyNNScript(object):
         if not use_c_visualiser and not use_spike_injector:
             run_time = 1000
         elif use_c_visualiser and not use_spike_injector:
-            run_time = 10000
+            run_time = 1000
         elif use_c_visualiser and use_spike_injector:
-            run_time = 100000
+            run_time = 1000
         elif not use_c_visualiser and use_spike_injector:
-            run_time = 10000
+            run_time = 1000
 
         weight_to_spike = 2.0
 
