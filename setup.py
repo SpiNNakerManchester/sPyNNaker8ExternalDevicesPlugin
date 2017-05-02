@@ -10,7 +10,7 @@ if os.environ.get('READTHEDOCS', None) == 'True':
 else:
     install_requires = ['sPyNNaker8 >= 1!4.0.0a2',
                         'sPyNNakerExternalDevicesPlugin == 1!4.0.0a3',
-                        'pyNN >= 0.7, < 0.8']
+                        'pynn>=0.8, <0.9']
 
 # Build a list of all project modules, as well as supplementary files
 main_package = "spynnaker8_external_devices_plugin"
