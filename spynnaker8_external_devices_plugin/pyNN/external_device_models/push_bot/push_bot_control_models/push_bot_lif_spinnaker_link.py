@@ -48,9 +48,9 @@ class PushBotLifSpinnakerLinkDataHolder(DataHolder):
             {'protocol': protocol, 'devices': devices,
              'spikes_per_second': spikes_per_second,
              'ring_buffer_sigma': ring_buffer_sigma, 'label': label,
-             'incoming_spike_buffer_size':incoming_spike_buffer_size,
+             'incoming_spike_buffer_size': incoming_spike_buffer_size,
              'constraints': constraints,
-             'tau_m':tau_m, 'cm': cm, 'v_rest': v_rest, 'v_reset': v_reset,
+             'tau_m': tau_m, 'cm': cm, 'v_rest': v_rest, 'v_reset': v_reset,
              'tau_syn_E': tau_syn_E, 'tau_syn_I': tau_syn_I,
              'tau_refac': tau_refrac, 'i_offset': i_offset, 'v_init': v_init})
 

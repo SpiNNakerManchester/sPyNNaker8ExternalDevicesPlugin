@@ -120,10 +120,6 @@ from spynnaker_external_devices_plugin.pyNN.external_devices_models.push_bot\
     PushBotSpiNNakerLinkLEDDevice
 
 from spynnaker_external_devices_plugin.pyNN.external_devices_models.push_bot\
-    .push_bot_spinnaker_link.push_bot_spinnaker_link_led_device import \
-    PushBotSpiNNakerLinkLEDDevice
-
-from spynnaker_external_devices_plugin.pyNN.external_devices_models.push_bot\
     .push_bot_spinnaker_link.push_bot_spinnaker_link_motor_device import \
     PushBotSpiNNakerLinkMotorDevice
 
@@ -306,6 +302,7 @@ def activate_live_output_to(population, device):
     spynnaker_external_devices.add_edge(
         population._get_vertex, device._get_vertex,
         constants.SPIKE_PARTITION_ID)
+
 
 def EthernetControlPopulation(
         n_neurons, model, label=None, local_host=None, local_port=None,
