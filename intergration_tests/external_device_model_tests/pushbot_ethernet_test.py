@@ -1,6 +1,6 @@
 import spynnaker8 as p
-import spynnaker8_external_device_plugin.pyNN as e
-from spynnaker8_external_device_plugin.pyNN import PushBotRetinaViewer
+import spynnaker8_external_devices_plugin.pyNN as e
+from spynnaker8_external_devices_plugin.pyNN import PushBotRetinaViewer
 
 p.setup(1.0)
 
