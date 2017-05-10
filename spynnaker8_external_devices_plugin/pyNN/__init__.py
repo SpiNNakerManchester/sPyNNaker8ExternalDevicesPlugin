@@ -25,28 +25,28 @@ from spynnaker.pyNN.utilities import globals_variables
 import spynnaker8
 
 # components
-from spynnaker8_external_device_plugin.pyNN.external_device_models \
+from spynnaker8_external_devices_plugin.pyNN.external_device_models \
     .arbitrary_fpga_device import ArbitraryFPGADeviceDataHolder as \
     ArbitraryFPGADevice
 
-from spynnaker8_external_device_plugin.pyNN.external_device_models \
+from spynnaker8_external_devices_plugin.pyNN.external_device_models \
     .external_spinnaker_link_cochlea_device import \
     ExternalCochleaDeviceDataHolder as ExternalCochleaDevice
 
-from spynnaker8_external_device_plugin.pyNN.external_device_models \
+from spynnaker8_external_devices_plugin.pyNN.external_device_models \
     .external_spinnaker_link_fpga_retina_device import \
     ExternalFPGARetinaDeviceDataHolder as ExternalFPGARetinaDevice
 
-from spynnaker8_external_device_plugin.pyNN.external_device_models \
+from spynnaker8_external_devices_plugin.pyNN.external_device_models \
     .munich_spinnaker_link_motor_device import MunichMotorDeviceDataHolder as \
     MunichMotorDevice
 
-from spynnaker8_external_device_plugin.pyNN.external_device_models \
+from spynnaker8_external_devices_plugin.pyNN.external_device_models \
     .munich_spinnaker_link_retina_device import MunichRetinaDeviceDataHolder \
     as MunichRetinaDevice
 
 # injector for spynnaker 8
-from spynnaker8_external_device_plugin.pyNN.utility_models \
+from spynnaker8_external_devices_plugin.pyNN.utility_models \
     .spike_injector_data_holder import SpikeInjectorDataHolder \
     as ExternalDeviceSpikeInjector
 
@@ -66,12 +66,12 @@ from spynnaker_external_devices_plugin.pyNN.external_devices_models \
     .abstract_ethernet_sensor import AbstractEthernetSensor
 
 # PushBot Ethernet model control
-from spynnaker8_external_device_plugin.pyNN.external_device_models.push_bot\
+from spynnaker8_external_devices_plugin.pyNN.external_device_models.push_bot\
     .push_bot_control_models.push_bot_lif_ethernet import \
     PushBotLifEthernetDataHolder as PushBotLifEthernet
 
 # PushBot SpiNNakerLink control
-from spynnaker8_external_device_plugin.pyNN.external_device_models.push_bot\
+from spynnaker8_external_devices_plugin.pyNN.external_device_models.push_bot\
     .push_bot_control_models.push_bot_lif_spinnaker_link import \
     PushBotLifSpinnakerLinkDataHolder as PushBotLifSpinnakerLink
 
@@ -114,10 +114,6 @@ from spynnaker_external_devices_plugin.pyNN.external_devices_models.push_bot. \
 from spynnaker_external_devices_plugin.pyNN.external_devices_models.push_bot\
     .push_bot_spinnaker_link.push_bot_spinnaker_link_laser_device import \
     PushBotSpiNNakerLinkLaserDevice
-
-from spynnaker_external_devices_plugin.pyNN.external_devices_models.push_bot\
-    .push_bot_spinnaker_link.push_bot_spinnaker_link_led_device import \
-    PushBotSpiNNakerLinkLEDDevice
 
 from spynnaker_external_devices_plugin.pyNN.external_devices_models.push_bot\
     .push_bot_spinnaker_link.push_bot_spinnaker_link_led_device import \
@@ -306,6 +302,7 @@ def activate_live_output_to(population, device):
     spynnaker_external_devices.add_edge(
         population._get_vertex, device._get_vertex,
         constants.SPIKE_PARTITION_ID)
+
 
 def EthernetControlPopulation(
         n_neurons, model, label=None, local_host=None, local_port=None,
