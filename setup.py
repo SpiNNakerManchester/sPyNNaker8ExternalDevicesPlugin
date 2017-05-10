@@ -2,15 +2,13 @@ import os
 from setuptools import setup
 from collections import defaultdict
 
-if os.environ.get('READTHEDOCS', None) == 'True':
-    # scipy must be added in config.py as a mock
-    install_requires = ['sPyNNaker8 >= 1!4.0.0a2',
-                        'sPyNNakerExternalDevicesPlugin == 1!4.0.0a3',
-                        'pynn>=0.8, <0.9']
-else:
-    install_requires = ['sPyNNaker8 >= 1!4.0.0a2',
-                        'sPyNNakerExternalDevicesPlugin == 1!4.0.0a3',
-                        'pynn>=0.8, <0.9']
+__version__ = None
+exec(open("spynnaker8_external_devices_plugin/_version.py").read())
+assert __version__
+
+install_requires = ['sPyNNaker8 >= 1!4.0.0a5, < 1!5.0.0',
+                    'sPyNNakerExternalDevicesPlugin >= 1!4.0.0a5, < 1!5.0.0',
+                    'pynn>=0.8, <0.9']
 
 # Build a list of all project modules, as well as supplementary files
 main_package = "spynnaker8_external_devices_plugin"
@@ -41,7 +39,7 @@ url = "https://github.com/SpiNNakerManchester/sPyNNaker8ExternalDevicesPlugin"
 
 setup(
     name="sPyNNaker8ExternalDevicesPlugin",
-    version="1!4.0.0a3",
+    version=__version__,
     description="Spinnaker External Devices Plugin extended for PyNN8",
     url=url,
     packages=packages,
