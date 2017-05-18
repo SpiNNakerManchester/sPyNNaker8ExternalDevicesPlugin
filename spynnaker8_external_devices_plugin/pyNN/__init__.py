@@ -123,8 +123,9 @@ from spynnaker_external_devices_plugin.pyNN.external_devices_models.push_bot\
     .push_bot_spinnaker_link.push_bot_spinnaker_link_motor_device import \
     PushBotSpiNNakerLinkMotorDevice
 
-from spynnaker_external_devices_plugin.pyNN.external_devices_models.push_bot\
-    .push_bot_spinnaker_link.push_bot_spinnaker_link_retina_device import \
+from spynnaker8_external_devices_plugin.pyNN.external_device_models\
+    .push_bot.push_bot_control_models.push_bot_spinnaker_link_retina_device \
+    import PushBotSpinnakerLinkRetinaDeviceDataHolder as \
     PushBotSpiNNakerLinkRetinaDevice
 
 from spynnaker_external_devices_plugin.pyNN.external_devices_models.push_bot\

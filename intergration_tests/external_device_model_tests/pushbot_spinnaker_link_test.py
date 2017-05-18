@@ -43,19 +43,17 @@ devices = [motor_0, motor_1, speaker, laser, led_front, led_back]
 
 # Set up the PushBot control
 pushbot = p.Population(
-    len(devices), e.PushBotLifSpinnakerLink,
-    {
-        "protocol": pushbot_protocol,
-        "devices": devices,
-        "tau_syn_E": 500.0
-    },
+    len(devices), e.PushBotLifSpinnakerLink(
+        protocol=pushbot_protocol,
+        devices=devices,
+        tau_syn_E=500.0),
     label="PushBot"
 )
 
 # Send in some spikes
 stimulation = p.Population(
-    len(devices), p.SpikeSourceArray,
-    {"spike_times": [[i * 1000] for i in range(len(devices))]},
+    len(devices), p.SpikeSourceArray(
+        spike_times=[[i * 1000] for i in range(len(devices))]),
     label="input"
 )
 
@@ -67,13 +65,11 @@ p.Projection(stimulation, pushbot, p.FromListConnector(connections))
 retina_resolution = e.PushBotRetinaResolution.DOWNSAMPLE_64_X_64
 pushbot_retina = p.Population(
     retina_resolution.value.n_neurons,
-    e.PushBotSpiNNakerLinkRetinaDevice,
-    {
-        "spinnaker_link_id": spinnaker_link,
-        "board_address": board_address,
-        "protocol": pushbot_protocol,
-        "resolution": retina_resolution
-    })
+    e.PushBotSpiNNakerLinkRetinaDevice(
+        spinnaker_link_id=spinnaker_link,
+        board_address=board_address,
+        protocol=pushbot_protocol,
+        resolution=retina_resolution))
 
 viewer = PushBotRetinaViewer(
     retina_resolution.value, port=17895)
