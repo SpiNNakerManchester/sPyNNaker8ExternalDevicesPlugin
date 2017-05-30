@@ -10,6 +10,7 @@ import os
 from spinn_front_end_common.abstract_models \
     .abstract_send_me_multicast_commands_vertex \
     import AbstractSendMeMulticastCommandsVertex
+from spinn_front_end_common.utilities import globals_variables
 from spinn_front_end_common.utilities.notification_protocol.socket_address \
     import SocketAddress
 from spinn_front_end_common.utility_models.live_packet_gather \
@@ -17,9 +18,7 @@ from spinn_front_end_common.utility_models.live_packet_gather \
 from spinnman.messages.eieio.eieio_type import EIEIOType
 
 # main
-from spynnaker.pyNN.spinnaker_common import SpiNNakerCommon
-from spynnaker.pyNN.utilities import globals_variables
-
+from spynnaker.pyNN.abstract_spinnaker_common import AbstractSpiNNakerCommon
 import spynnaker8
 
 # components
@@ -149,7 +148,7 @@ activate_live_output_for = \
 
 logger = logging.getLogger(__name__)
 
-SpiNNakerCommon.register_binary_search_path(
+AbstractSpiNNakerCommon.register_binary_search_path(
     os.path.dirname(model_binaries.__file__))
 spynnaker_external_devices = SpynnakerExternalDevicePluginManager()
 
