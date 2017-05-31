@@ -1,8 +1,5 @@
 language: python
-matrix:
-  include:
-    - python: "2.7"
-    - pytest
+python: 2.7
 
 virtualenv:
   system_site_packages: true
@@ -38,9 +35,7 @@ before_script:
 
 script:
   - py.test unittests
-  - flake8 spynnaker8_external_devices_plugin
-  - flake8 unittests
-  # No flake8 of intergartion_tests as very broken
+  - flake8
   - cd doc/source
   - sphinx-build -T -E -b html -d _build/doctrees-readthedocsdirhtml -D language=en . _build/html
   - sphinx-build -T -b json -d _build/doctrees-json -D language=en . _build/json
