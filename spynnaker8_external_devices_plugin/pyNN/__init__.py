@@ -191,6 +191,7 @@ __all__ = [
 
 ]
 
+
 def EthernetControlPopulation(
         n_neurons, model, label=None, local_host=None, local_port=None,
         database_notify_port_num=None, database_ack_port_num=None):
