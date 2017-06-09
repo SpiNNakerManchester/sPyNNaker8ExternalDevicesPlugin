@@ -6,9 +6,6 @@ __version__ = None
 exec(open("spynnaker8_external_devices_plugin/_version.py").read())
 assert __version__
 
-install_requires = ['sPyNNaker8 >= 1!4.0.0a5, < 1!5.0.0',
-                    'sPyNNakerExternalDevicesPlugin >= 1!4.0.0a5, < 1!5.0.0',
-                    'pynn>=0.8, <0.9']
 
 # Build a list of all project modules, as well as supplementary files
 main_package = "spynnaker8_external_devices_plugin"
@@ -44,5 +41,12 @@ setup(
     url=url,
     packages=packages,
     package_data=package_data,
-    install_requires=install_requires
+    dependency_links=['http://github.com/python-quantities/python-quantities/'
+                      'tarball/master#egg=quantities'],
+    install_requires=[
+        'quantities',
+        'sPyNNaker8 >= 1!4.0.0a5, < 1!5.0.0',
+        'sPyNNakerExternalDevicesPlugin >= 1!4.0.0a5, < 1!5.0.0',
+        'pynn>=0.8, <0.9']
+
 )
