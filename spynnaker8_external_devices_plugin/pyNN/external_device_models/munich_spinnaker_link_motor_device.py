@@ -1,6 +1,6 @@
-from spynnaker8.utilities.data_holder import DataHolder
+from spynnaker8.utilities import DataHolder
 from spynnaker_external_devices_plugin.pyNN.external_devices_models \
-    .munich_spinnaker_link_motor_device import MunichMotorDevice
+    import MunichMotorDevice
 
 
 class MunichMotorDeviceDataHolder(DataHolder):

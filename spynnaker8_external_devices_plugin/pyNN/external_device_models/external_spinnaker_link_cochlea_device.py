@@ -1,6 +1,6 @@
-from spynnaker8.utilities.data_holder import DataHolder
+from spynnaker8.utilities import DataHolder
 from spynnaker_external_devices_plugin.pyNN.external_devices_models \
-    .external_spinnaker_link_cochlea_device import ExternalCochleaDevice
+    import ExternalCochleaDevice
 
 
 class ExternalCochleaDeviceDataHolder(DataHolder):

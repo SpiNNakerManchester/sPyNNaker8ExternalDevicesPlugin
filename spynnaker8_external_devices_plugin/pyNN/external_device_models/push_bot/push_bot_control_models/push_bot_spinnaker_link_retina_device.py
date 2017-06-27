@@ -1,7 +1,6 @@
-from spynnaker8.utilities.data_holder import DataHolder
+from spynnaker8.utilities import DataHolder
 from spynnaker_external_devices_plugin.pyNN.external_devices_models.push_bot\
-    .push_bot_spinnaker_link.push_bot_spinnaker_link_retina_device import \
-    PushBotSpiNNakerLinkRetinaDevice
+    .push_bot_spinnaker_link import PushBotSpiNNakerLinkRetinaDevice
 
 
 class PushBotSpinnakerLinkRetinaDeviceDataHolder(DataHolder):
