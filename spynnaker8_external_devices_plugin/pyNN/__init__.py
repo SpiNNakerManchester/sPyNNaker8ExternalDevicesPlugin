@@ -10,9 +10,6 @@ import os
 from spinn_front_end_common.abstract_models \
     .abstract_send_me_multicast_commands_vertex \
     import AbstractSendMeMulticastCommandsVertex
-from spinn_front_end_common.utilities import globals_variables
-from spinn_front_end_common.utilities.notification_protocol.socket_address \
-    import SocketAddress
 from spinn_front_end_common.utility_models.live_packet_gather \
     import LivePacketGather
 from spinnman.messages.eieio.eieio_type import EIEIOType
