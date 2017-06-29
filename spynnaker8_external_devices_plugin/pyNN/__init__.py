@@ -290,8 +290,8 @@ def EthernetSensorPopulation(
 
 def SpikeInjector(
         label=None, port=None, notify=True, virtual_key=None,
-        database_notify_host=None,
-        database_notify_port_num=None, database_ack_port_num=None):
+        database_notify_host=None, database_notify_port_num=None,
+        database_ack_port_num=None):
     """ Supports adding a spike injector to the application graph.
 
     :param n_neurons: the number of neurons the spike injector will emulate
