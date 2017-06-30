@@ -10,9 +10,6 @@ import os
 from spinn_front_end_common.abstract_models \
     .abstract_send_me_multicast_commands_vertex \
     import AbstractSendMeMulticastCommandsVertex
-from spinn_front_end_common.utilities import globals_variables
-from spinn_front_end_common.utilities.notification_protocol.socket_address \
-    import SocketAddress
 from spinn_front_end_common.utility_models.live_packet_gather \
     import LivePacketGather
 from spinnman.messages.eieio.eieio_type import EIEIOType
@@ -202,7 +199,7 @@ def EthernetControlPopulation(
     :param label: An optional label for the population
     :param local_host:\
             The optional local host IP address to listen on for commands
-    :param lost_port: The optional local port to listen on for commands
+    :param local_port: The optional local port to listen on for commands
     :param database_ack_port_num:\
             The optional port to which responses to the database notification\
             protocol are to be sent
@@ -265,8 +262,8 @@ def EthernetSensorPopulation(
             Note that the Population cannot be used as the target of a\
             Projection.
     """
-    if not issubclass(device.build_model(), AbstractEthernetSensor):
-        raise Exception("Model must be a subclass of AbstractEthernetSensor")
+    if not isinstance(device, AbstractEthernetSensor):
+        raise Exception("Model must be an instance of AbstractEthernetSensor")
     injector_params = dict(device.get_injector_parameters())
     injector_params['notify'] = False
 
@@ -289,8 +286,9 @@ def EthernetSensorPopulation(
 
 
 def SpikeInjector(
-        label=None, port=None, virtual_key=None, database_notify_host=None,
-        database_notify_port_num=None, database_ack_port_num=None):
+        label=None, port=None, notify=True, virtual_key=None,
+        database_notify_host=None, database_notify_port_num=None,
+        database_ack_port_num=None):
     """ Supports adding a spike injector to the application graph.
 
     :param n_neurons: the number of neurons the spike injector will emulate
@@ -312,39 +310,9 @@ def SpikeInjector(
             device will receive the database is ready command
     :type database_notify_port_num: int
     """
-    _process_database_socket(
-        database_notify_port_num, database_notify_host, database_ack_port_num)
+    if notify:
+        add_database_socket_address(database_notify_host,
+                                    database_notify_port_num,
+                                    database_ack_port_num)
     return ExternalDeviceSpikeInjector(
         label=label, port=port, virtual_key=virtual_key)
-
-
-def _process_database_socket(
-        database_notify_port_num, database_notify_host, database_ack_port_num):
-    """ code to handle building a database socket address as needed
-
-    :param database_notify_port_num:  the port num where to send the db is \
-    written packet.
-    :param database_notify_host: the ipaddress of where to send the db is \
-    written packet.
-    :param database_ack_port_num: the port number to listen on for ack of \
-     having read and set them selves up on.
-    :rtype: None
-    """
-    config = globals_variables.get_simulator().config
-    if database_notify_port_num is None:
-        database_notify_port_num = config.getint("Database", "notify_port")
-    if database_notify_host is None:
-        database_notify_host = config.get("Database", "notify_hostname")
-    if database_ack_port_num is None:
-        database_ack_port_num = config.get("Database", "listen_port")
-        if database_ack_port_num == "None":
-            database_ack_port_num = None
-
-    # build the database socket address used by the notification interface
-    database_socket = SocketAddress(
-        listen_port=database_ack_port_num,
-        notify_host_name=database_notify_host,
-        notify_port_no=database_notify_port_num)
-
-    # update socket interface with new demands.
-    spynnaker_external_devices.add_socket_address(database_socket)
