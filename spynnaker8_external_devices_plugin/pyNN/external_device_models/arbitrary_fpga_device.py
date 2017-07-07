@@ -1,6 +1,6 @@
-from spynnaker8.utilities.data_holder import DataHolder
+from spynnaker8.utilities import DataHolder
 from spynnaker_external_devices_plugin.pyNN.external_devices_models\
-    .arbitrary_fpga_device import ArbitraryFPGADevice
+    import ArbitraryFPGADevice
 
 
 class ArbitraryFPGADeviceDataHolder(DataHolder):

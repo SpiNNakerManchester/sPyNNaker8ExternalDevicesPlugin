@@ -1,5 +1,5 @@
-from spynnaker8.utilities.data_holder import DataHolder
-from spynnaker_external_devices_plugin.pyNN.utility_models.spike_injector \
+from spynnaker8.utilities import DataHolder
+from spynnaker_external_devices_plugin.pyNN.utility_models \
     import SpikeInjector
 
 
